@@ -383,7 +383,7 @@ window.addEventListener("resize", updateCarousel);
 
 updateCarousel();
 
-// custom select dropdowns 
+// custom select dropdowns
 const customSelects = document.querySelectorAll(".custom-select");
 
 for (let i = 0; i < customSelects.length; i++) {
@@ -426,7 +426,7 @@ document.addEventListener("click", function (e) {
   }
 });
 
-// form validation 
+// form validation
 const contactForm = document.querySelector('form[aria-label="نموذج التواصل"]');
 const fullNameInput = document.getElementById("full-name");
 const emailInput = document.getElementById("email");
@@ -465,14 +465,14 @@ contactForm.addEventListener("submit", function (e) {
   let isFormValid = true;
 
   if (fullNameInput.value.trim() === "") {
-    showError(fullNameInput, "الاسم الكامل مطلوب");
+    showError(fullNameInput, "يرجى إدخال الاسم الكامل");
     isFormValid = false;
   } else {
     clearError(fullNameInput);
   }
 
   if (emailInput.value.trim() === "") {
-    showError(emailInput, "البريد الإلكتروني مطلوب");
+    showError(emailInput, "يرجى إدخال البريد الإلكتروني");
     isFormValid = false;
   } else if (!isValidEmail(emailInput.value.trim())) {
     showError(emailInput, "البريد الإلكتروني غير صحيح");
@@ -481,11 +481,10 @@ contactForm.addEventListener("submit", function (e) {
     clearError(emailInput);
   }
 
-  if (phoneInput.value.trim() === "") {
-    showError(phoneInput, "رقم الهاتف مطلوب");
-    isFormValid = false;
-  } else if (!isValidEgyptianPhone(phoneInput.value.trim())) {
-    showError(phoneInput, "رقم الهاتف غير صحيح، يجب أن يكون رقم مصري صحيح");
+  const phone = phoneInput.value.trim();
+
+  if (phone !== "" && !isValidEgyptianPhone(phone)) {
+    showError(phoneInput, "يرجى إدخال رقم هاتف صحيح");
     isFormValid = false;
   } else {
     clearError(phoneInput);
@@ -494,7 +493,7 @@ contactForm.addEventListener("submit", function (e) {
   const projectDetails = projectDetailsInput.value.trim();
 
   if (projectDetails === "") {
-    showError(projectDetailsInput, "تفاصيل المشروع مطلوبة");
+    showError(projectDetailsInput, "يرجى إدخال تفاصيل المشروع");
     isFormValid = false;
   } else if (projectDetails.length <= 10) {
     showError(
