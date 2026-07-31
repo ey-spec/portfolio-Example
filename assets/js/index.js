@@ -68,6 +68,9 @@ if (savedFont) {
   if (savedButton) {
     applyFont(savedFont, savedButton);
   }
+} else {
+  applyFont("tajawal", fontButtons[1]);
+  localStorage.setItem("selectedFont", "tajawal");
 }
 
 // colors
@@ -154,6 +157,10 @@ function setActiveSwatch(activeSwatch) {
         break;
       }
     }
+  } else {
+    applyTheme(themes[0]);
+    setActiveSwatch(themeSwatches[0]);
+    localStorage.setItem("selectedTheme", JSON.stringify(themes[0]));
   }
 })();
 
@@ -460,6 +467,35 @@ function isValidEgyptianPhone(phone) {
   return /^((\+?20)0?|0)(10|11|12|15)\d{8}$/.test(phone);
 }
 
+let showSuccessPopup = () => {
+  const popup = document.createElement("div");
+  popup.className =
+    "fixed inset-0 flex items-center justify-center z-50 bg-slate-950/80 backdrop-blur-sm";
+  popup.innerHTML = `
+      <div class="bg-slate-800 rounded-2xl p-8 max-w-md mx-4 text-center border border-slate-700 shadow-2xl">
+        <div class="w-20 h-20 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6">
+          <i class="fa-solid fa-check text-4xl text-white"></i>
+        </div>
+        <h3 class="text-2xl font-bold mb-3">تم إرسال رسالتك بنجاح!</h3>
+        <p class="text-slate-400 mb-6">شكراً لتواصلك. سأرد عليك في أقرب وقت ممكن.</p>
+        <button class="success-popup-close bg-gradient-to-r from-primary to-secondary px-8 py-3 rounded-xl font-bold hover:shadow-lg transition-all duration-300">
+          حسناً
+        </button>
+      </div>
+    `;
+  document.body.appendChild(popup);
+
+  popup.querySelector(".success-popup-close").addEventListener("click", () => {
+    popup.remove();
+  });
+
+  setTimeout(() => {
+    if (popup.parentNode) {
+      popup.remove();
+    }
+  }, 5000);
+};
+
 contactForm.addEventListener("submit", function (e) {
   e.preventDefault();
   let isFormValid = true;
@@ -506,19 +542,7 @@ contactForm.addEventListener("submit", function (e) {
   }
 
   if (isFormValid) {
-    Swal.fire({
-      icon: "success",
-      title: "تم إرسال رسالتك بنجاح!",
-      text: "شكراً لتواصلك. سأرد عليك في أقرب وقت ممكن.",
-      confirmButtonText: "حسناً",
-      confirmButtonColor: "#3b82f6",
-      background: document.documentElement.classList.contains("dark")
-        ? "#1e293b"
-        : "#ffffff",
-      color: document.documentElement.classList.contains("dark")
-        ? "#ffffff"
-        : "#0f172a",
-    });
+    showSuccessPopup();
 
     contactForm.reset();
     projectTypeSelect.dataset.value = "";
