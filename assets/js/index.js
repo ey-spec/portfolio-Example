@@ -195,7 +195,12 @@ if (savedThemeMode === "dark") {
 } else if (savedThemeMode === "light") {
   document.documentElement.classList.remove("dark");
   themeToggleButton.setAttribute("aria-pressed", "false");
+} else {
+  document.documentElement.classList.add("dark");
+  themeToggleButton.setAttribute("aria-pressed", "true");
+  localStorage.setItem("theme", "dark");
 }
+
 
 // scroll spy active links
 let sections = document.querySelectorAll("section[id]");
