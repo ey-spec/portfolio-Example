@@ -174,6 +174,7 @@ resetSettings.addEventListener("click", function () {
   applyFont("tajawal", fontButtons[1]);
   localStorage.setItem("selectedFont", "tajawal");
   settingSidebar.classList.add("translate-x-full");
+  settingsToggle.style.right = "0px";
 });
 
 // theme
